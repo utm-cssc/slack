@@ -36,7 +36,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 						element: {
 							type: 'plain_text_input',
 							action_id: 'dreamy_input',
-							multiline: true,
+							multiline: true
 						}
 					},
 					{
@@ -47,7 +47,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 							text: 'What pillar(s) does it fall under?'
 						},
 						accessory: {
-							action_id: 'text1234',
+							action_id: 'text1',
 							type: 'multi_static_select',
 							placeholder: {
 								type: 'plain_text',
@@ -56,7 +56,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 							options: PILLARS
 						}
 					},
-          {
+					{
 						type: 'input',
 						block_id: 'input_c',
 						label: {
@@ -69,7 +69,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 							multiline: false
 						}
 					},
-          {
+					{
 						type: 'input',
 						block_id: 'input_d',
 						label: {
@@ -79,10 +79,10 @@ app.command('/idea', async ({ ack, body, client }) => {
 						element: {
 							type: 'plain_text_input',
 							action_id: 'dreamy_input',
-							multiline: true,
+							multiline: true
 						}
 					},
-          {
+					{
 						type: 'section',
 						block_id: 'input_e',
 						text: {
@@ -90,7 +90,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 							text: 'What team(s) would best execute this idea?'
 						},
 						accessory: {
-							action_id: 'text1234',
+							action_id: 'text2',
 							type: 'multi_static_select',
 							placeholder: {
 								type: 'plain_text',
@@ -98,7 +98,7 @@ app.command('/idea', async ({ ack, body, client }) => {
 							},
 							options: TEAMS
 						}
-					},
+					}
 				],
 				submit: {
 					type: 'plain_text',
@@ -111,25 +111,111 @@ app.command('/idea', async ({ ack, body, client }) => {
 	}
 });
 
-app.view('view_1', async ({ ack, body, view, client}) => {
-  await ack();
-  const user = body['user']['id'];
+app.view('view_1', async ({ ack, body, view, client }) => {
+	await ack();
+	const values = view.state.values;
+	const user = body['user']['id'];
 
-  let msg = '';
-  // Save to DB
-  //const results = await db.set(user.input, val);
-  msg = 'Yeehaw';
+	try {
+		await client.chat.postMessage({
+			channel: 'ideas',
+			text: 'Idea submitted!',
+			blocks: [
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: 'Idea :zap:'
+					}
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: values.input_a.dreamy_input.value
+					}
+				},
+				{
+					type: 'divider'
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: 'Pillar(s) :books:'
+					}
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: values.input_b.text1.selected_options.map((option) => option.value).join(', ')
+					}
+				},
+				{
+					type: 'divider'
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: 'Goal :white_check_mark:'
+					}
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: values.input_c.dreamy_input.value
+					}
+				},
+				{
+					type: 'divider'
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: 'How does it compliment the pillar(s) and achieve the goal? :memo:'
+					}
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: values.input_d.dreamy_input.value
+					}
+				},
+				{
+					type: 'divider'
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: 'Team(s) :rocket:'
+					}
+				},
+				{
+					type: 'section',
+					text: {
+						type: 'mrkdwn',
+						text: values.input_e.text2.selected_options.map((option) => option.value).join(', ')
+					}
+				},
+				{
+					type: 'divider'
+				}
+			]
+		});
 
-  // Message the user
-  try {
-    await client.chat.postMessage({
-      channel: "ideas",
-      text: msg
-    });
-  }
-  catch (error) {
-    console.error(error);
-  }
+		await client.chat.postMessage({
+			channel: user,
+			text: 'Idea submitted!'
+		});
+	} catch (error) {
+		console.error(error);
+	}
 });
 
 (async () => {
