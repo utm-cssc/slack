@@ -1,0 +1,20 @@
+{
+  "name": "slack",
+  "version": "1.0.0",
+  "description": "Slackbot that takes in ideas from CSSC members",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": "git@github.com:utm-cssc/slack.git",
+  "author": "Jarrod Servilla <jarrod.servilla@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@slack/bolt": "^3.4.0",
+    "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.7"
+  }
+}
