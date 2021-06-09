@@ -2,16 +2,23 @@ const PILLARS = [
 	{
 		text: {
 			type: 'plain_text',
-			text: 'Support and Guidance'
+			text: 'Academic and Professional Growth'
 		},
-		value: 'Support and Guidance'
+		value: 'Academic and Professional Growth'
 	},
 	{
 		text: {
 			type: 'plain_text',
-			text: 'Academic and Professional Growth'
+			text: 'Collaboration with MCS Clubs and Societies'
 		},
-		value: 'Academic and Professional Growth'
+		value: 'Collaboration with MCS Clubs and Societies'
+	},
+	{
+		text: {
+			type: 'plain_text',
+			text: 'CSSC Internal'
+		},
+		value: 'CSSC Internal'
 	},
 	{
 		text: {
@@ -23,10 +30,10 @@ const PILLARS = [
 	{
 		text: {
 			type: 'plain_text',
-			text: 'Collaboration with MCS Clubs and Societies'
+			text: 'Support and Guidance'
 		},
-		value: 'Collaboration with MCS Clubs and Societies'
-	}
+		value: 'Support and Guidance'
+	},
 ];
 
 const TEAMS = [
@@ -36,6 +43,13 @@ const TEAMS = [
 			text: 'Communications'
 		},
 		value: 'Communications'
+	},
+	{
+		text: {
+			type: 'plain_text',
+			text: 'CSSC'
+		},
+		value: 'CSSC'
 	},
 	{
 		text: {
